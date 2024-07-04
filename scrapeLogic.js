@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: true,
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
@@ -12,6 +12,7 @@ const scrapeLogic = async (res) => {
     ],
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
   });
+
   try {
     const page = await browser.newPage();
     await page.goto("https://developer.chrome.com/");
@@ -29,7 +30,7 @@ const scrapeLogic = async (res) => {
 
     // Locate the full title with a unique string
     const textSelector = await page.waitForSelector("text/Customize and automate");
-    const fullTitle = await textSelector.evaluate((el) => el.textContent);
+    const fullTitle = await textSelector.evaluate(el => el.textContent);
 
     // Print the full title
     const logStatement = `The title of this blog post is ${fullTitle}`;
