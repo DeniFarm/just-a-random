@@ -4,12 +4,8 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 
-app.get("/yt", async (req, res) => {
-  const query = req.query.s;
-  if (!query) {
-    return res.status(400).send("Query parameter 's' is required");
-  }
-  await scrapeLogic(query, res);
+app.get("/scrape", (req, res) => {
+  scrapeLogic(res);
 });
 
 app.get("/", (req, res) => {
