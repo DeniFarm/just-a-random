@@ -10,7 +10,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-# Install Puppeteer dependencies
+# Install Chrome dependencies
 RUN apt-get update && \
     apt-get install -y wget --no-install-recommends && \
     apt-get install -y \
@@ -19,19 +19,28 @@ RUN apt-get update && \
     libatk1.0-0 \
     libcups2 \
     libdbus-1-3 \
-    libfontconfig1 \
-    libgbm1 \
-    libgconf-2-4 \
-    libgtk-3-0 \
-    libnspr4 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxrandr2 \
+    libxtst6 \
     libnss3 \
+    libnspr4 \
+    libfontconfig1 \
     libxss1 \
-    lsb-release \
-    xdg-utils \
+    libgbm1 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libjpeg62-turbo \
+    libx11-6 \
+    libx11-dev \
+    libgbm-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+# Install Puppeteer and download Chromium
+RUN npm install puppeteer && npm install
 
-# Expose port and run the application
 EXPOSE 3000
 CMD [ "node", "index.js" ]
