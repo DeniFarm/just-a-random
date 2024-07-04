@@ -1,17 +1,19 @@
 {
-  "name": "puppeteer-app",
+  "name": "puppeteer-render",
   "version": "1.0.0",
-  "description": "A Node.js Express application using Puppeteer for taking screenshots of YouTube search results",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "path": "^0.12.7",
-    "puppeteer": "^20.4.0"
+    "puppeteer": "^19.7.2",
+    "path": "^0.12.7"
   }
 }
