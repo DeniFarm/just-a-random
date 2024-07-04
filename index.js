@@ -1,30 +1,21 @@
-const express = require('express');
-const puppeteer = require('puppeteer');
-const path = require('path');
-const fs = require('fs');
-
+const express = require("express");
+const { scrapeLogic } = require("./scrapeLogic");
 const app = express();
 
-app.get('/yt', async (req, res) => {
-    const searchQuery = req.query.s;
+const PORT = process.env.PORT || 4000;
 
-    if (!searchQuery) {
-        return res.send('Please provide a search query using the "s" query parameter.');
-    }
-
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(`https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`);
-    await page.waitForSelector('ytd-thumbnail');
-
-    const screenshotPath = path.join(__dirname, 'screenshot.png');
-    await page.screenshot({ path: screenshotPath });
-    await browser.close();
-
-    res.sendFile(screenshotPath);
+app.get("/yt", (req, res) => {
+  const searchQuery = req.query.s;
+  if (!searchQuery) {
+    return res.send('Please provide a search query using the "s" query parameter.');
+  }
+  scrapeLogic(res, searchQuery);
 });
 
-const PORT = process.env.PORT || 3000;
+app.get("/", (req, res) => {
+  res.send("Render Puppeteer server is up and running!");
+});
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`);
 });
